@@ -1,9 +1,11 @@
 /_build
 /cover
 /deps
+/assets/node_modules
 /doc
 /.fetch
 erl_crash.dump
 *.ez
 *.beam
 /config/*.secret.exs
+*.swp
