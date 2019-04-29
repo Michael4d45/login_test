@@ -9,18 +9,19 @@ defmodule LoginTestWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
+  pipeline :users_api do
+    plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
   end
 
   scope "/", LoginTestWeb do
     pipe_through :browser
-
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", LoginTestWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/users", LoginTestWeb do
+    pipe_through :users_api
+    options "/", UserController, :options 
+    resources "/", UserController, except: [:new, :edit] 
+  end
 end
