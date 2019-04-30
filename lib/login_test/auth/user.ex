@@ -17,6 +17,7 @@ defmodule LoginTest.Auth.User do
     |> cast(attrs, [:email, :is_active, :password])
     |> validate_required([:email, :is_active, :password])
     |> unique_constraint(:email)
+    |> put_password_hash()
   end 
 
 

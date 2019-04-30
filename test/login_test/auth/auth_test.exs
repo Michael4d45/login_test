@@ -16,7 +16,7 @@ defmodule LoginTest.AuthTest do
         |> Enum.into(@valid_attrs)
         |> Auth.create_user()
 
-      user
+      %User{user | password: nil}
     end
 
     test "list_users/0 returns all users" do
@@ -33,6 +33,7 @@ defmodule LoginTest.AuthTest do
       assert {:ok, %User{} = user} = Auth.create_user(@valid_attrs)
       assert user.email == "some email"
       assert user.is_active == true
+      assert Bcrypt.verify_pass("some password", user.password_hash)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
@@ -44,12 +45,14 @@ defmodule LoginTest.AuthTest do
       assert {:ok, %User{} = user} = Auth.update_user(user, @update_attrs)
       assert user.email == "some updated email"
       assert user.is_active == false
+      assert Bcrypt.verify_pass("some other password", user.password_hash)
     end
 
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
       assert {:error, %Ecto.Changeset{}} = Auth.update_user(user, @invalid_attrs)
-      assert user == Auth.get_user!(user.id)
+      assert %User{user | password: nil} == Auth.get_user!(user.id)
+      assert Bcrypt.verify_pass("some password", user.password_hash)
     end
 
     test "delete_user/1 deletes the user" do
