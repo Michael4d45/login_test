@@ -2,11 +2,13 @@ PROJ = apitest
 DB?=TRUE
 PORT?=4000
 
-SERVER = 134.209.55.215
+SSHPORT=7676
+
+SERVER = 45.56.63.24
 PWD_ = Projects/$(PROJ)
 PWD = Projects/$(PROJ)/*
 
-USER = root
+USER = michael
 EXCLUDE = .git/ _build/ cover/ deps/ doc/ .fetch erl_crash.dump *.ez apitest-*.tar npm-debug.log assets/node_modules/ priv/static/ config/*.secret.exs *.swp
 EXCLUDE_FLAGS = $(addprefix --exclude=, $(EXCLUDE))
 RSYNC_OPTIONS = $(EXCLUDE_FLAGS) --delete --no-p --omit-dir-times $(DRYFLAG)
@@ -45,11 +47,11 @@ deploy:
 	MIX_ENV=prod PORT=4001 elixir --detached -S mix do compile, phx.server
 
 take_:
-	rsync -aivz --exclude=*~ $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD_) .
+	rsync -aivz -e 'ssh -p $(SSHPORT)'  --exclude=*~ $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD_) .
 
 take:
-	rsync -aivz --exclude=*~ $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD) .
+	rsync -aivz -e 'ssh -p $(SSHPORT)' --exclude=*~ $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD) .
 
 give:
-	rsync -aivz --exclude=*~ . $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD_)
+	rsync -aivz -e 'ssh -p $(SSHPORT)' --exclude=*~ . $(RSYNC_OPTIONS) $(USER)@$(SERVER):$(PWD_)
 
