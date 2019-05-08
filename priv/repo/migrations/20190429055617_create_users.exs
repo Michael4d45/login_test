@@ -5,7 +5,7 @@ defmodule LoginTest.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :email, :string
       add :password_hash, :string
-      add :is_active, :boolean, default: false, null: false
+      add :is_active, :boolean, default: true, null: false
 
       timestamps()
     end

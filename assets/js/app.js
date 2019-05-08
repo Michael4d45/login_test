@@ -23,7 +23,11 @@ function POST(data, response){
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 201) {
+    console.log(this.readyState)
+    console.log(this.status)
+    console.log("")
+		if (this.readyState == 4 && (this.status == 201 || this.status == 422 )) {
+			console.log(this.responseText)
 			response(JSON.parse(this.responseText))
 		};
 	}
@@ -32,6 +36,8 @@ function POST(data, response){
 
 var form = document.getElementById('new_user');
 var users = document.getElementById('users');
+var errors = document.getElementById('errors');
+var info = document.getElementById('info');
 form.onsubmit = function (e) {
 	e.preventDefault();
   var object = {};
@@ -40,7 +46,18 @@ form.onsubmit = function (e) {
   console.log(object);
 
 	var data = {"user":{"email": form.elements[0].value, "password": form.elements[1].value}};
-	var response = function(json){users.innerHTML += "<div>" + json.data.name + " : " + json.data.password + "</div>\n"}
+	var response = function(json){
+    if(json.errors !== undefined) {
+      errors.innerHTML += JSON.stringify(json.errors);
+    }
+    else if (json.data.email !== undefined && json.data.id !== undefined){
+      errors.innerHTML = "";
+      users.innerHTML += "<div>" + json.data.id + " : " + json.data.email + "</div>\n";
+    }
+    else {
+      info.innerHTML += JSON.stringify(json);
+    }
+  }
 	POST(data, response);
 }
 

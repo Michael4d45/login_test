@@ -4,7 +4,7 @@ defmodule LoginTest.Auth.User do
 
   schema "users" do
     field :email, :string
-    field :is_active, :boolean, default: false
+    field :is_active, :boolean, default: true
     field :password_hash, :string
     field :password, :string, virtual: true
 
@@ -29,5 +29,25 @@ defmodule LoginTest.Auth.User do
 
   defp put_password_hash(changeset) do
     changeset
+  end 
+
+  def authenticate_user(email, password) do 
+    query = from(u in Users, where u.email == ^email)
+    query |> Repo.one() |> verify_password(password)
   end
+
+  defp verify_password(nil, _) do 
+
+    Bcrypt.no_user_verify()
+    {error: "wrong email"}
+  end 
+
+  defp verify_password(user, password) do 
+    if(Bcrypt.verify_password(password, user.password_hash)) {
+      {:ok, user}
+    }else {
+      {:error, "wrong password"}
+    }
+  end 
+
 end
