@@ -39,5 +39,9 @@ defmodule LoginTestWeb.UserController do
     with {:ok, %User{}} <- Auth.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
+  end 
+
+  def sign_in(conn, _) do 
+    send_resp(conn, :no_content, "")
   end
 end

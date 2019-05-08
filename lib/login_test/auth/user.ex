@@ -1,6 +1,8 @@
 defmodule LoginTest.Auth.User do
-  use Ecto.Schema
+  use Ecto.Schema 
+  alias LoginTest.Repo
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   schema "users" do
     field :email, :string
@@ -32,22 +34,22 @@ defmodule LoginTest.Auth.User do
   end 
 
   def authenticate_user(email, password) do 
-    query = from(u in Users, where u.email == ^email)
+    query = from(u in "users", where: u.email == ^email)
     query |> Repo.one() |> verify_password(password)
   end
 
   defp verify_password(nil, _) do 
 
     Bcrypt.no_user_verify()
-    {error: "wrong email"}
+    {:error, "wrong email"}
   end 
 
   defp verify_password(user, password) do 
-    if(Bcrypt.verify_password(password, user.password_hash)) {
+    if Bcrypt.verify_pass(password, user.password_hash) do
       {:ok, user}
-    }else {
+    else 
       {:error, "wrong password"}
-    }
+    end
   end 
 
 end

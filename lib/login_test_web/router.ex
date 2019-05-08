@@ -23,6 +23,6 @@ defmodule LoginTestWeb.Router do
     pipe_through :users_api
     options "/", UserController, :options 
     resources "/", UserController, except: [:new, :edit] 
-    sign_in "/sign_in", UserController, :sign_in 
+    post "/sign_in", UserController, :sign_in 
   end
 end
