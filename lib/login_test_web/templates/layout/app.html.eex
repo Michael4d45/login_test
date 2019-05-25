@@ -10,7 +10,7 @@
   <body>
     <header>
       <section style="padding:25px;font-size:50px;" class="container">
-      LOGIN
+        <a class="header-go-back-to-home" href="/">LOGIN</a>
       </section>
     </header>
     <main role="main" class="container">

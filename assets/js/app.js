@@ -16,9 +16,8 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 //
-var url = "/api/users";
 
-function POST(data, response){
+function POST(url, data, response){
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -34,30 +33,37 @@ function POST(data, response){
 	xhr.send(JSON.stringify(data));
 }
 
-var form = document.getElementById('new_user');
-var users = document.getElementById('users');
 var errors = document.getElementById('errors');
 var info = document.getElementById('info');
-form.onsubmit = function (e) {
+
+var register_form = document.getElementById('register_form');
+register_form.onsubmit = function (e) {
+  var url = "/api/users";
 	e.preventDefault();
   var object = {};
   var formData = new FormData(e.target);
   formData.forEach((value, key) => {object[key] = value});
   console.log(object);
 
-	var data = {"user":{"email": form.elements[0].value, "password": form.elements[1].value}};
+	var data = {"user":{"email": register_form.elements[0].value, "password": register_form.elements[1].value}};
 	var response = function(json){
     if(json.errors !== undefined) {
       errors.innerHTML += JSON.stringify(json.errors);
     }
     else if (json.data.email !== undefined && json.data.id !== undefined){
       errors.innerHTML = "";
-      users.innerHTML += "<div>" + json.data.id + " : " + json.data.email + "</div>\n";
     }
     else {
       info.innerHTML += JSON.stringify(json);
     }
   }
-	POST(data, response);
+	POST(url, data, response);
 }
 
+
+
+var login_form = document.getElementById('login_form');
+login_form.onsubmit = function (e) {
+
+
+}

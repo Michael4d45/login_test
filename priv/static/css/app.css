@@ -135,3 +135,16 @@ header nav a {
 
 /* This file is for your main application css. */
 
+
+.main-link {
+  background: lightblue;
+  margin: 50px;
+  padding: 15px;
+  border-radius: 10px;
+  color: #444444;
+}
+
+.header-go-back-to-home {
+  color:black;
+}
+
