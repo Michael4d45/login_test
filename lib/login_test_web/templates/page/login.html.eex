@@ -1,0 +1,14 @@
+<section>
+  <h1>Login test</h1>
+  <hr/>
+  <form id="login_form">
+    <label>Email</label>
+    <input name="email" type="text"/>
+    <label>Password</label>
+    <input name="password" type="password"/>
+    <button type="submit">Login</button>
+  </form>
+  <div id="users">
+  </div>
+</section>
+

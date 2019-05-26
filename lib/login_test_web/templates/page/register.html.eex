@@ -1,0 +1,14 @@
+<section>
+  <h1>Register test</h1>
+  <hr/>
+  <form id="register_form">
+    <label>Email</label>
+    <input name="email" type="text"/>
+    <label>Password</label>
+    <input name="password" type="password"/>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="users">
+  </div>
+</section>
+
