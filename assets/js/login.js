@@ -16,3 +16,11 @@ login_form.onsubmit = function (e) {
   }
 	POST(url, data, response);
 }
+
+
+export var Post = { run: function() {
+  console.log("whatever");
+  // put initializer stuff here
+  // for example:
+  // $(document).on('click', '.remove-post', my_remove_post_function)
+}}

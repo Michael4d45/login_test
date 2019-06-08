@@ -17,8 +17,8 @@ defmodule LoginTestWeb.Router do
   scope "/", LoginTestWeb do
     pipe_through :browser
     get "/", PageController, :index
-    get "/login", PageController, :login
-    get "/register", PageController, :register
+    get "/login", LoginPageController, :index
+    get "/register", RegisterPageController, :index
   end
 
   scope "/api/users", LoginTestWeb do

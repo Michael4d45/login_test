@@ -19,7 +19,8 @@ import "phoenix_html"
 var errors = document.getElementById('errors');
 var info = document.getElementById('info');
 
-function POST(url, data, response){
+// POST JSON data 
+function POST(url, data, response) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -35,58 +36,8 @@ function POST(url, data, response){
 	xhr.send(JSON.stringify(data));
 }
 
-<<<<<<< HEAD
-function form_to_json(e){
-  var formData = new FormData(e.target); 
-  var object = {};
-  formData.forEach((value, key) => {object[key] = value});
-  console.log(object);
-  return object;
-}
-
-var errors = document.getElementById('errors');
-var info = document.getElementById('info');
-
-var register_form = document.getElementById('register_form');
-register_form.onsubmit = function (e) {
-	e.preventDefault();
-  var url = "/api/users";
-	var data = {"user":{"email": register_form.elements[0].value, "password": register_form.elements[1].value}};
-	var response = function(json){
-    if(json.errors !== undefined) {
-      errors.innerHTML += JSON.stringify(json.errors);
-    }
-    else if (json.data.email !== undefined && json.data.id !== undefined){
-      errors.innerHTML = "";
-    }
-    else {
-      info.innerHTML += JSON.stringify(json);
-    }
-  }
-	POST(url, data, response);
-}
-
-
-
-var login_form = document.getElementById('login_form');
-login_form.onsubmit = function (e) {
-	e.preventDefault();
-  var url = "/api/users/log_in";
-	var data = {"user":{"email": login_form.elements[0].value, "password": login_form.elements[1].value}};
-  var response = function(json){
-    if(json.errors !== undefined) {
-      errors.innerHTML += JSON.stringify(json.errors);
-    }
-    else if (json.data.email !== undefined && json.data.id !== undefined){
-      errors.innerHTML = "";
-    }
-    else {
-      info.innerHTML += JSON.stringify(json);
-    }
-  }
-	POST(url, data, response);
-}
-=======
+// Take html form and return JS object that 
+// can be turned into JSON string
 function form_to_object(e){
   var object = {};
   var formData = new FormData(e.target);
@@ -94,5 +45,3 @@ function form_to_object(e){
   console.log(object);
   return object;
 }
-
->>>>>>> c24fcaa472b22001f9040b75b5c59ed6bf11de93
