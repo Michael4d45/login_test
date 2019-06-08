@@ -41,7 +41,7 @@ defmodule LoginTestWeb.UserController do
     end
   end 
 
-  def sign_in(conn, _) do 
+  def log_in(conn, _) do 
     send_resp(conn, :no_content, "")
   end
 end
