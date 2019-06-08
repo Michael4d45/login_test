@@ -16,6 +16,8 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 //
+var errors = document.getElementById('errors');
+var info = document.getElementById('info');
 
 function POST(url, data, response){
 	var xhr = new XMLHttpRequest();
@@ -33,37 +35,11 @@ function POST(url, data, response){
 	xhr.send(JSON.stringify(data));
 }
 
-var errors = document.getElementById('errors');
-var info = document.getElementById('info');
-
-var register_form = document.getElementById('register_form');
-register_form.onsubmit = function (e) {
-  var url = "/api/users";
-	e.preventDefault();
+function form_to_object(e){
   var object = {};
   var formData = new FormData(e.target);
   formData.forEach((value, key) => {object[key] = value});
   console.log(object);
-
-	var data = {"user":{"email": register_form.elements[0].value, "password": register_form.elements[1].value}};
-	var response = function(json){
-    if(json.errors !== undefined) {
-      errors.innerHTML += JSON.stringify(json.errors);
-    }
-    else if (json.data.email !== undefined && json.data.id !== undefined){
-      errors.innerHTML = "";
-    }
-    else {
-      info.innerHTML += JSON.stringify(json);
-    }
-  }
-	POST(url, data, response);
+  return object;
 }
 
-
-
-var login_form = document.getElementById('login_form');
-login_form.onsubmit = function (e) {
-
-
-}
